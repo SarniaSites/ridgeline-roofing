@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_fb-pack/
+Disallow: /_shots/
+
+Sitemap: https://sarniasites.github.io/ridgeline-roofing/sitemap.xml

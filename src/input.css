@@ -1,0 +1,118 @@
+/* Ridgeline Roofing — Tailwind source. Build with `npm run build`. */
+
+@font-face { font-family: 'Archivo'; src: url('../fonts/archivo-variable.woff2') format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('../fonts/hanken-grotesk-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('../fonts/hanken-grotesk-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('../fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('../fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-paper text-ink font-sans antialiased; font-size: 1.0625rem; line-height: 1.65; }
+  /* Archivo set semi-expanded to echo the wide lettering in the logo */
+  .font-display, h1, h2, h3 { font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif; font-stretch: 118%; letter-spacing: -0.015em; }
+  h1, h2 { font-weight: 750; line-height: 1.05; }
+  h3 { font-weight: 700; line-height: 1.2; }
+  :focus-visible { outline: 3px solid #1450d2; outline-offset: 3px; border-radius: 6px; }
+  [id] { scroll-margin-top: 5.5rem; }
+  ::selection { background: #1450d2; color: #fff; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-site px-5 sm:px-8; }
+  .btn { @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 font-semibold transition duration-200; }
+  .btn-blue { @apply btn bg-ridge text-white hover:bg-ridge-700 active:translate-y-px; }
+  .btn-ghost { @apply btn border-2 border-ink/15 bg-white text-ink hover:border-ink/40; }
+  .btn-light { @apply btn bg-white text-ink hover:bg-ridge-50; }
+  .label { @apply text-sm font-semibold uppercase tracking-[.14em] text-ridge; }
+  .field { @apply mt-1.5 block w-full min-h-[48px] rounded-xl border-2 border-ink/10 bg-white px-4 py-3 text-base text-ink transition placeholder:text-slate-300 focus:border-ridge focus:outline-none; }
+  .field[aria-invalid="true"] { @apply border-red-600; }
+}
+
+/* ---------- Reveal on scroll ---------- */
+.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- Header ---------- */
+.site-header { transition: background-color .3s, box-shadow .3s, transform .3s; }
+.site-header.is-scrolled { background: rgba(251,249,246,.92); backdrop-filter: saturate(1.4) blur(10px); box-shadow: 0 1px 0 rgba(11,11,13,.08); }
+.nav-link { position: relative; }
+.nav-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: #1450d2; transform: scaleX(0); transform-origin: left; transition: transform .25s; }
+.nav-link:hover::after, .nav-link[aria-current="true"]::after { transform: scaleX(1); }
+
+/* Mobile menu */
+.menu-panel { clip-path: inset(0 0 100% 0); transition: clip-path .45s cubic-bezier(.7,0,.2,1); }
+.menu-open .menu-panel { clip-path: inset(0 0 0 0); }
+.menu-panel a { opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; }
+.menu-open .menu-panel a { opacity: 1; transform: none; transition-delay: calc(.15s + var(--i) * 50ms); }
+.burger span { transition: transform .3s, opacity .2s; }
+.menu-open .burger span:nth-child(1) { transform: rotate(45deg); }
+.menu-open .burger span:nth-child(2) { opacity: 0; }
+.menu-open .burger span:nth-child(3) { transform: rotate(-45deg); }
+.menu-open .mobile-bar { transform: translateY(110%); }
+
+/* ---------- Hero illustration: courses of slates laid from the eaves up ---------- */
+.course { animation: lay 10s cubic-bezier(.3,.7,.2,1) infinite; animation-delay: calc(var(--i) * .32s); opacity: 0; }
+.ridge-cap { animation: cap 10s cubic-bezier(.3,.7,.2,1) infinite; animation-delay: 2.1s; opacity: 0; }
+@keyframes lay { 0% { opacity: 0; transform: translateY(-14px); } 5% { opacity: 1; transform: none; } 78% { opacity: 1; transform: none; } 84%, 100% { opacity: 0; transform: none; } }
+@keyframes cap { 0% { opacity: 0; transform: translateY(-18px); } 5% { opacity: 1; transform: none; } 66% { opacity: 1; } 72%, 100% { opacity: 0; } }
+.cloud { animation: drift 14s ease-in-out infinite alternate; }
+.cloud-2 { animation-duration: 18s; animation-delay: -6s; }
+@keyframes drift { from { transform: translateX(-10px); } to { transform: translateX(16px); } }
+.smoke { animation: smoke 4s ease-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+.smoke:nth-child(2) { animation-delay: 1.3s; } .smoke:nth-child(3) { animation-delay: 2.6s; }
+@keyframes smoke { 0% { opacity: 0; transform: translateY(0) scale(.6); } 25% { opacity: .55; } 100% { opacity: 0; transform: translateY(-34px) scale(1.25); } }
+
+/* Ridge-line divider: draws itself in when revealed */
+.ridge-draw path { stroke-dasharray: 1.02; stroke-dashoffset: 1.02; transition: stroke-dashoffset 1.8s cubic-bezier(.6,0,.2,1); }
+.ridge-draw.is-in path, .no-js .ridge-draw path { stroke-dashoffset: 0; }
+
+/* ---------- Services explorer ---------- */
+.svc-tab[aria-selected="true"] { background: #0b0b0d; color: #fff; border-color: #0b0b0d; }
+.svc-tab[aria-selected="true"] .svc-ico { background: #1450d2; color: #fff; }
+.svc-tab[aria-selected="true"] .svc-arrow { opacity: 1; transform: none; }
+.svc-panel { animation: panel-in .5s cubic-bezier(.2,.7,.2,1); }
+@keyframes panel-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.svc-panel img { animation: img-in .7s cubic-bezier(.2,.7,.2,1); }
+@keyframes img-in { from { opacity: .3; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+
+/* ---------- Gallery ---------- */
+.g-item { transition: opacity .35s, transform .35s; }
+.g-item.is-hidden { display: none; }
+.g-item img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.g-item:hover img { transform: scale(1.04); }
+.chip[aria-pressed="true"] { background: #0b0b0d; color: #fff; border-color: #0b0b0d; }
+
+/* Lightbox */
+.lb { opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
+.lb.is-open { opacity: 1; visibility: visible; }
+.lb-img { transition: opacity .25s, transform .25s; }
+.lb-img.is-swapping { opacity: 0; transform: scale(.98); }
+
+/* Steps: progress line */
+.steps-line { transform: scaleX(0); transform-origin: left; transition: transform 1.6s cubic-bezier(.6,0,.2,1) .2s; }
+.is-in .steps-line { transform: scaleX(1); }
+
+/* Form */
+.form-error { display: none; }
+.field[aria-invalid="true"] + .form-error { display: block; }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Mobile bar slide-in */
+.mobile-bar { transform: translateY(110%); transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.mobile-bar.is-shown { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0ms !important; }
+  .course, .ridge-cap { opacity: 1 !important; animation: none !important; }
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+/* Tailwind display utilities would otherwise beat the hidden attribute */
+[hidden] { display: none !important; }
