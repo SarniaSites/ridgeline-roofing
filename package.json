@@ -1,8 +1,6 @@
 {
   "name": "ridgeline-roofing",
-  "version": "1.0.0",
   "private": true,
-  "description": "Website for Ridgeline Roofing Ltd., Guernsey",
   "scripts": {
     "build": "tailwindcss -i ./src/input.css -o ./assets/css/styles.css --minify",
     "watch": "tailwindcss -i ./src/input.css -o ./assets/css/styles.css --watch"

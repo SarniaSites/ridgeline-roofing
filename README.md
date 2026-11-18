@@ -1,60 +1,67 @@
 # Ridgeline Roofing Ltd. — website
 
-Single-page site in plain HTML, Tailwind CSS v3 (compiled and committed) and a small vanilla JS file. No frameworks, no runtime CDNs.
-
-## Folder layout
+Single-page site for a Guernsey roofing contractor. Plain HTML, Tailwind CSS v3 (compiled), vanilla JS. No frameworks, no CDNs, all paths relative.
 
 ```
-index.html              ← the whole site, sections separated by comment banners
-thanks.html             ← shown after the quote form is sent
-404.html                ← GitHub Pages not-found page (uses <base href="/ridgeline-roofing/">)
-assets/css/styles.css   ← compiled Tailwind – don't edit, run `npm run build`
-assets/js/main.js       ← menu, scroll reveals, services explorer, gallery filter + lightbox, form validation
-assets/fonts/           ← self-hosted Archivo (variable) + Hanken Grotesk, with OFL licences
-images/brand/           ← logo.svg (light backgrounds), logo-white.svg (dark), mark.svg
-images/work/            ← job photos as WebP: name.webp (large) + name-sm.webp (small)
-images/                 ← favicons, og-image.jpg (share card), site.webmanifest
-src/input.css           ← Tailwind source, @font-face, keyframes, hero illustration animation
-tailwind.config.js      ← brand colours and fonts
-sitemap.xml, robots.txt
-_fb-pack/               ← Facebook source pack (not published – underscore folders are skipped by Pages)
-_shots/                 ← desktop/mobile screenshots for sending to the client (not published)
+index.html              the page (sections separated by comment banners)
+thanks.html             shown after the quote form is sent
+404.html                "This page has slipped" (a roof with one slate missing)
+assets/css/styles.css   compiled Tailwind (committed, do not edit by hand)
+assets/js/main.js       menu, header, slate edges, ridge lines, services explorer,
+                        roof cross-section on scroll, gallery lightbox, form
+assets/fonts/           self-hosted woff2 + OFL licences
+images/brand/           logo.svg (redrawn), mark.svg, logo-symbol.svg (used by thanks/404)
+images/work/            job photos, two WebP sizes (name.webp ~1600px, name-sm.webp ~800px)
+images/                 favicons, og-image.jpg, site.webmanifest
+src/input.css           Tailwind source, @font-face, components, keyframes
+tailwind.config.js      colours by role + fonts
+_fb-pack/               Facebook research pack (not published, folder starts with _)
+_shots/                 screenshots for the team (not published)
 ```
 
 ## Brand
 
 | Name | Hex | Used for |
 |---|---|---|
-| ink | `#0b0b0d` | Text, About section, footer (logo background, #060606, softened) |
-| ridge | `#1450d2` | Buttons, links, accents, the ridge-line divider (blue sampled from the logo roof line) |
-| ridge-700 | `#0d3aa6` | Button hover |
-| ridge-100 / 50 | `#dfe7fa` / `#eef2fb` | Icon tiles, illustration background |
-| slate | `#4a4849` | Body copy, illustrated slates (from the cover photo) |
-| paper | `#fbf9f6` | Page background (from the cover photo) |
+| action | `#1254D3` | The logo's roof line and N. Buttons, links, focus rings, the ridge-line motif |
+| action-700 | `#0B3FB0` | The logo's shaded blue. Button hover |
+| ink | `#0D1017` | The logo's black, tinted slightly blue. Text and dark sections |
+| slate | `#4A4849` / `#676668` | The slates in the cover photo. Section edges, drawings |
+| surface | `#F1F1EE` | The cover photo's pale sky, cooled to granite grey. Light grounds |
+| highlight | `#C2512A` | Red treated battens / terracotta clay tiles from their jobs. Drawings and markers only |
+| timber | `#D8B98E` | Bare rafters. Drawings only |
 
-- **Fonts:** Archivo (semi-expanded, headings – picks up the wide lettering in the logo) and Hanken Grotesk (body).
-- **Logo:** the Facebook logo is a square image with phone numbers on a black circle, so it was **redrawn as SVG** (same house roof line, chimney, four-pane window, wide "RIDGELINE" with the blue N, spaced "ROOFING"). The lettering is set in Michroma, the closest open font; worth asking the client for the original artwork file.
-- **Hero illustration:** inline SVG in `index.html` – courses of slates are laid from the eaves up, then the ridge goes on, on a 10-second loop. Turned off for reduced-motion users.
+Fonts: **Zalando Sans Expanded** (display, wide square capitals like the logo lettering), **Rethink Sans** (body), **Azeret Mono** (small labels). All OFL, from @fontsource.
+
+Logo: the Facebook logo is a square image with phone numbers in it, so it was **redrawn as SVG** (roof line, window, RIDGELINE with the blue N rising as the chimney, ROOFING). The lettering is set in Zalando Sans Expanded as the closest open match. Ask the client for the original vector file before going live.
+
+Recurring device: a small blue roof line drawn over one word of each heading (from the logo).
 
 ## Editing
 
-- **Text:** everything is in `index.html`.
-- **Colours:** change `tailwind.config.js`, then `npm install && npm run build`.
-- **Adding a work photo:** export `name.webp` (about 1600px on the long side) and `name-sm.webp` (about 800px) into `images/work/`, then copy one of the `<li class="g-item">` blocks in the *Recent work* section. Set `data-cat` to `reroof`, `repair` or `progress` (this drives the filter buttons), set `data-full` to the large image, and write the caption in the `<p>` under it – the lightbox uses that caption.
-- **Services explorer:** each service is a `<button role="tab">` plus a matching `<article role="tabpanel">` (`tab-xxx` ↔ `panel-xxx`). To add one, copy both and give them a new id. The `data-service` on each panel's button pre-selects that option in the quote form, so keep it matching an `<option>` in the form.
-- **Before & after:** not included – the pack had no matching before/after pairs of the same roof. If the client has some, a slider is an easy add.
+- **Text**: edit `index.html`.
+- **Colours**: `tailwind.config.js`, then `npm install && npm run build`.
+- **A work photo**: export `name.webp` (~1600px long side) and `name-sm.webp` (~800px) into `images/work/`, then copy one of the `<a class="work-tile">` blocks in the *Recent roofs* section and change the paths, `alt` and `data-cap` (the lightbox caption).
+- **Services explorer**: each service is a `.svc-row` in the *Services* section. The desktop photo panel (`[data-svc-photos]`) holds one image per row in the same order, and the captions are the `caps` list in `assets/js/main.js`.
+- **Roof cross-section**: the drawing is inline SVG in the *How a roof goes back on* section (layers `data-l="1"`..`5"`). Steps are the `[data-step]` list items; the stage names under the drawing are the `names` list in `main.js`.
+- No before/after slider: the pack had no matching before/after pairs.
 
-## Before going live – checklist
+## Going live — checklist
 
-- [ ] Swap `https://sarniasites.github.io/ridgeline-roofing/` for the real domain everywhere: canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD, `sitemap.xml`, `robots.txt`, and the form's `_next`. Change `<base href>` in `404.html` to `/`.
-- [ ] **When the client goes ahead, switch the form from Toby's email (`formsubmit.co/toby1@greggs.org`) to the client's (probably ridgeline.gsy@gmail.com) and activate FormSubmit** (first submission sends a confirmation email).
-- [ ] Confirm phone numbers: the Facebook contact info lists **07781 412075** (used as the main Call number); the logo and WhatsApp button use **07781 437171**. Both are shown – check which should be the main one.
-- [ ] Confirm email ridgeline.gsy@gmail.com.
-- [ ] Client to sign off the services wording. Assumptions made from their photos rather than their words: they fit insulation between rafters, breathable membrane and battens; they do flashings around chimneys, dormers and roof windows; they reset ridges and verges.
-- [ ] No reviews were available (reviews are off on their page), so there is no testimonials section. Add 3–6 if the client can supply them.
-- [ ] Not stated, so not claimed: insurance, guarantees, free quotes, prices, areas outside Guernsey, commercial work.
-- [ ] Left out of the site: the "looking for a roofer to join the team" recruitment post, and the GBS (Guernsey Building Supplies) branding on the clay-tile photos (cropped off).
-- [ ] Ask for the original logo artwork and any better/landscape photos of finished roofs.
+- [ ] Client buys their domain in their own name (roughly £10 a year for .com, £30–40 for .gg)
+- [ ] Help the client create a free Cloudflare account in their name; connect this repo to Cloudflare Pages on their account (production branch `main`, no build command, output = repo root) and add their domain to the Pages project
+- [ ] Swap the GitHub Pages URL for the real domain everywhere: canonical, og tags, JSON-LD, sitemap.xml, robots.txt, the form's `_next`
+- [ ] Switch the form from the team's email to the client's (`ridgeline.gsy@gmail.com`?) and activate FormSubmit
+- [ ] Confirm both phone numbers (07781 412075 and 07781 437171) and that 437171 is the WhatsApp number; confirm the email
+- [ ] Get the client to sign off the services wording, especially "Valleys and abutments" and "Around dormers and rooflights" under repairs (taken from their photos, not their posts)
+- [ ] Ask for the original logo vector
+- [ ] Optional: transfer the repo to the client's own GitHub if they want it
+
+Assumptions and things left out:
+- Areas: the pack only says "Guernsey", so no parishes are named.
+- No testimonials or FAQ: the page had no reviews and no questions to answer.
+- Left out: the "looking for a roofer to join the team" post (hiring), and the Guernsey Building Supplies banner on the clay tile photo (cropped off).
+- No prices, insurance, guarantees or "free quotes" claims: none are in the pack.
 
 ## Source
 
